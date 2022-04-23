@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FilmsIMDB</string>
+
+    <string name="error_msg">Something went wrong, please try again</string>
+</resources>
