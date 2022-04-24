@@ -1,4 +1,4 @@
-# IMDB_films_web_scraping_app_JSOUP
+# IMDB_films_webscraping_app
 
 ![221726443809c48b9afb918958ba8efea2d42b69](https://user-images.githubusercontent.com/64840495/164949706-040e3e1f-b19f-4101-be40-80fad85a6de5.jpeg)
 
@@ -26,7 +26,7 @@
 :white_check_mark: Movie's stars <br>
 
 
-## :white_square_button: Things used in this app ; <br>
+### :white_square_button: This project includes ; <br>
 
 :small_orange_diamond: Web scraping <br>
 :small_orange_diamond: View Binding  <br>
