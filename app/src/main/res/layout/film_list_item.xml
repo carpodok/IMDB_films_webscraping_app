@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filmItemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/filmItemView">
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/filmItemImg"
@@ -12,27 +12,33 @@
         android:layout_weight="1" />
 
     <TextView
+        android:layout_marginHorizontal="5dp"
         android:id="@+id/filmItemOrder"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/filmItemName"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="5" />
 
     <TextView
+        android:textSize="10sp"
         android:id="@+id/filmItemYear"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/filmItemRating"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:textSize="10sp" />
 
 </LinearLayout>
