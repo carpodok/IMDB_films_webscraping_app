@@ -61,8 +61,8 @@ class FilmListAdapter(
         holder.filmItem.setOnClickListener {
 
             val intent = Intent(context, FilmPageActivity::class.java).apply {
-                putExtra("link",film.link)
-                putExtra("order",film.order)
+                putExtra("link", film.link)
+                putExtra("order", film.order)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
 
@@ -83,7 +83,7 @@ class FilmListAdapter(
                     filteredList = films
 
                 } else {
-                    var resultList = ArrayList<Film>()
+                    val resultList = ArrayList<Film>()
 
                     for (item in films) {
                         if (item.name.lowercase().filter { !it.isWhitespace() }

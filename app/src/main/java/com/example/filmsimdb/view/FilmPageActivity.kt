@@ -24,7 +24,6 @@ class FilmPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFilmPageBinding
 
     private lateinit var filmViewModel: FilmViewModel
-    private lateinit var currFilm: Film
 
 
     private var job: Job? = null
@@ -35,9 +34,11 @@ class FilmPageActivity : AppCompatActivity() {
     private lateinit var filmDirectorTW: TextView
     private lateinit var filmWritersTW: TextView
     private lateinit var filmStarsTW: TextView
-    private lateinit var filmDesTW: TextView
+    private lateinit var filmPlotTW: TextView
     private lateinit var progressBar: ProgressBar
-    private lateinit var errorMsg : TextView
+    private lateinit var errorMsg: TextView
+
+    private lateinit var currFilm: Film
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,40 +49,8 @@ class FilmPageActivity : AppCompatActivity() {
 
         job = CoroutineScope(Dispatchers.IO).launch {
 
-            // filmList = filmViewModel.getScrapedFilmList()
-            currFilm = filmViewModel.getFilmList()[FILM_ORDER - 1]
 
-
-            filmViewModel.scrapFilm()
-            val directoryList = filmViewModel.getDirectories()
-            val writerList = filmViewModel.getWriters()
-            val starList = filmViewModel.getStars()
-            val filmDes = filmViewModel.getFilmDes()
-
-            var directories = "Director : "
-            var writers = "Writes : "
-            var stars = "Stars : "
-
-            for (i in 0 until directoryList.size) {
-                if (i != directoryList.size - 1) {
-                    directories += directoryList[i] + ", "
-                }
-                directories += directoryList[i]
-            }
-
-            for (i in 0 until writerList.size) {
-                if (i != directoryList.size - 1) {
-                    writers += writerList[i] + ", "
-                }
-                writers += writerList[i]
-            }
-
-            for (i in 0 until starList.size) {
-                if (i != directoryList.size - 1) {
-                    stars += starList[i] + ", "
-                }
-                stars += starList[i]
-            }
+            currFilm = getCurrFilm()
 
             withContext(Dispatchers.Main) {
 
@@ -91,10 +60,10 @@ class FilmPageActivity : AppCompatActivity() {
                     .placeholder(R.drawable.loading_spinner)
                     .into(filmIW)
 
-                filmDirectorTW.text = directories
-                filmWritersTW.text = writers
-                filmStarsTW.text = stars
-                filmDesTW.text = filmDes
+                filmDirectorTW.text = currFilm.getDirector()
+                filmWritersTW.text = currFilm.getWriters()
+                filmStarsTW.text = currFilm.getStars()
+                filmPlotTW.text = currFilm.getPlot()
 
                 filmNameTW.text = currFilm.name
 
@@ -103,13 +72,61 @@ class FilmPageActivity : AppCompatActivity() {
         observeData()
     }
 
+    private fun getCurrFilm(): Film {
+
+        val currListItem = filmViewModel.getFilmList()[FILM_ORDER - 1]
+
+        filmViewModel.scrapFilm()
+        val directoryList = filmViewModel.getDirectories()
+        val writerList = filmViewModel.getWriters()
+        val starList = filmViewModel.getStars()
+        val plot = filmViewModel.getFilmDes()
+
+        var directories = "Director : "
+        var writers = "Writes : "
+        var stars = "Stars : "
+
+        for (i in 0 until directoryList.size) {
+            if (i != directoryList.size - 1) {
+                directories += directoryList[i] + ", "
+            }
+            directories += directoryList[i]
+        }
+
+        for (i in 0 until writerList.size) {
+            if (i != directoryList.size - 1) {
+                writers += writerList[i] + ", "
+            }
+            writers += writerList[i]
+        }
+
+        for (i in 0 until starList.size) {
+            if (i != directoryList.size - 1) {
+                stars += starList[i] + ", "
+            }
+            stars += starList[i]
+        }
+
+        return Film(
+            currListItem.img,
+            currListItem.order,
+            currListItem.name,
+            currListItem.year,
+            currListItem.rating,
+            plot,
+            directories,
+            writers,
+            stars
+        )
+    }
+
     private fun observeData() {
 
         filmViewModel.isloadingLiveData.observe(this, Observer {
 
             if (it) {
                 progressBar.visibility = View.VISIBLE
-                errorMsg.visibility =View.INVISIBLE
+                errorMsg.visibility = View.INVISIBLE
 
             } else {
                 progressBar.visibility = View.INVISIBLE
@@ -121,9 +138,9 @@ class FilmPageActivity : AppCompatActivity() {
 
             if (it) {
                 progressBar.visibility = View.INVISIBLE
-                errorMsg.visibility =View.VISIBLE
-            }else{
-                errorMsg.visibility =View.INVISIBLE
+                errorMsg.visibility = View.VISIBLE
+            } else {
+                errorMsg.visibility = View.INVISIBLE
             }
         })
 
@@ -140,7 +157,7 @@ class FilmPageActivity : AppCompatActivity() {
         filmWritersTW = binding.filmWritersTextView
         filmNameTW = binding.filmNameTW
         filmStarsTW = binding.filmStarsTextView
-        filmDesTW = binding.filmDesTW
+        filmPlotTW = binding.filmPlotTW
         progressBar = binding.filmPagePB
         errorMsg = binding.filmPageErrorMsgTW
 

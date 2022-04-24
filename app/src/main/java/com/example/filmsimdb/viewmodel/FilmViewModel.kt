@@ -1,6 +1,5 @@
 package com.example.filmsimdb.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.filmsimdb.model.Film
@@ -18,16 +17,10 @@ class FilmViewModel
     var errorLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
     var isloadingLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    var directoriesLiveData: MutableLiveData<String> = MutableLiveData()
-    var writersLiveData: MutableLiveData<String> = MutableLiveData()
-    var starsLiveData: MutableLiveData<String> = MutableLiveData()
-
     private var directories = ArrayList<String>()
     private var writers = ArrayList<String>()
     private var stars = ArrayList<String>()
     private var filmDes = ""
-
-    private lateinit var filmFullImg: String
 
     private var filmURL: String = ""
 

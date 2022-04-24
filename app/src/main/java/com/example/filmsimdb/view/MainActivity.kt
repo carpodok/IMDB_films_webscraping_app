@@ -1,6 +1,5 @@
 package com.example.filmsimdb.view
 
-import android.R
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -24,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var job: Job? = null
 
-
     lateinit var filmViewModel: FilmViewModel
 
     // Views
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        init()
+        setInit()
 
         filmsRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -95,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun init() {
+    private fun setInit() {
 
         errorMsg = binding.mainPageErrorMsgTW
         progressBar = binding.mainPagePB
@@ -105,7 +103,6 @@ class MainActivity : AppCompatActivity() {
 
         job = CoroutineScope(Dispatchers.IO).launch {
 
-            // filmList = filmViewModel.getScrapedFilmList()
             filmList = filmViewModel.getFilmList()
 
             withContext(Dispatchers.Main) {
@@ -115,10 +112,5 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-    }
-
-    companion object {
-        private const val  ERROR_MSG = "No Results Found"
-        private const val  NO_RESULT_MSG = ""
     }
 }
